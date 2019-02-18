@@ -32,3 +32,32 @@ const puppeteer = require('puppeteer');
 
 
 })();
+
+
+/**
+ * Logic flow
+ */
+
+// read CLI args
+// configfile path, adress to test, verbosity level, report on file or on terminal, exclude paths, exclude pattern paths, report only errors or warning
+
+// read and validate .rcfile
+// all CLI args should be on rcfile. CLI args > rcfile args
+
+// Go on each page, get all useful infos and pass them to each rules
+// get object from each rule containing like this:
+// {
+//   ok: false,
+//   message: 'Erreur de alt dans les images',
+//   errors: [{
+//     line: 3,
+//     message: 'Il manque un alt'
+//   }, {
+//     line: 5,
+//     message: 'Alt empty'
+//   }]
+// }
+
+// abstract puppeteer ?
+// with layer on top
+// GetHTML() onResource() ...

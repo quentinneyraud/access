@@ -1,10 +1,22 @@
-import Cli from './cli'
+import defaultConfig from './config.default'
+import { getRulesByPreset } from './rules'
+import { mergeExistingKey } from './utils'
+import puppeteer from 'puppeteer'
 
-let cli = new Cli()
-cli.execute()
-console.log(cli.getArguments())
+export default (config) => {
+  config = Object.assign({}, defaultConfig, config)
 
-// const puppeteer = require('puppeteer');
+  console.log(config)
+
+  // let rules = config.presets.reduce((acc, preset) => {
+  //   return acc.concat(...getRulesByPreset(preset))
+  // }, [])
+
+  // config.rules = rules
+
+
+}
+
 
 // (async () => {
 //   const browser = await puppeteer.launch();

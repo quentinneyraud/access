@@ -7,10 +7,7 @@ const DEFAULT_CONFIG_FILE_PATH = './.accessrc.json'
 
 const list = (val, memo) => memo.concat(val.split(','))
 
-/**
- * Class Cli
- */
-export default class Cli {
+export default {
     /**
      * Set CLI infos and parse command
      */
@@ -24,7 +21,7 @@ export default class Cli {
             .option('-ip, --ignore-pattern <ignore_pattern>', 'Ignore pattern', list, [])
             .option('-q, --quiet', 'Report errors only', false)
             .parse(process.argv)
-    }
+    },
 
     /**
      * Return all CLI arguments validated
@@ -35,7 +32,7 @@ export default class Cli {
         this.arguments.address = program.args[0]
         this.validateAndFormatArguments()
         return this.arguments
-    }
+    },
 
     /**
      * Validate CLI arguments
@@ -65,10 +62,7 @@ export default class Cli {
       }
 
       // address
-      if (!this.arguments.address) {
-        console.warn(`Aucune adresse fournie`)
-        process.exit(0)
-      } else if (!this.arguments.address.match(/^http:\/\/\w+(\.\w+)*(:[0-9]+)?\/?(\/[.\w]*)*$/)) {
+      if (this.arguments.address && !this.arguments.address.match(/^http:\/\/\w+(\.\w+)*(:[0-9]+)?\/?(\/[.\w]*)*$/)) {
         console.warn(`L'adresse ${this.arguments.address} n'est pas une adresse valide`)
         process.exit(0)
       }

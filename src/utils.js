@@ -1,3 +1,5 @@
+import fs from 'fs'
+
 export const mergeExistingKey = (source, overrride) => {
   source = Object.assign({}, source)
 
@@ -8,4 +10,8 @@ export const mergeExistingKey = (source, overrride) => {
   })
 
   return source
+}
+
+export const fileExists = (path) => {
+  return fs.existsSync(path)
 }

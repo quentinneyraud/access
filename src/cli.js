@@ -1,9 +1,9 @@
 import program from 'commander'
+import debug from 'debug'
 import { version } from '../package.json'
-import fs from 'fs'
 import path from 'path'
 
-const DEFAULT_CONFIG_FILE_PATH = './.accessrc.json'
+const d = debug('access:Cli')
 
 const list = (val, memo) => memo.concat(val.split(','))
 
@@ -12,14 +12,16 @@ export default {
      * Set CLI infos and parse command
      */
     execute () {
+      d('execute')
         program
             .version(version, '-v, --version')
             .usage('[options] <address>')
-            .option('-c, --config <config_path>', 'Set config file path', DEFAULT_CONFIG_FILE_PATH)
-            .option('-o, --output-file [output_path]', 'Set output file path', false)
-            .option('-i, --ignore-path <ignore_path>', 'Ignore path', list, [])
-            .option('-ip, --ignore-pattern <ignore_pattern>', 'Ignore pattern', list, [])
-            .option('-q, --quiet', 'Report errors only', false)
+            .option('-c, --config <config_path>', 'set config file path', false)
+            .option('-o, --output-file [output_path]', 'set output file path', false)
+            .option('-i, --ignore-path <ignore_path>', 'ignore path', list, [])
+            .option('-ip, --ignore-pattern <ignore_pattern>', 'ignore pattern', list, [])
+            .option('-q, --quiet', 'report errors only', false)
+            .option('-d, --debug', 'debug', false)
             .parse(process.argv)
     },
 
@@ -52,13 +54,6 @@ export default {
           outputFilePath = this.arguments.outputFile
         }
         this.arguments.outputFile = path.resolve(outputFilePath)
-      }
-
-      // config file
-      this.arguments.config = path.resolve(this.arguments.config)
-      if (!fs.existsSync(this.arguments.config)) {
-        console.warn(`Le fichier de config ${this.arguments.config}`)
-        process.exit(0)
       }
 
       // address
